@@ -1,33 +1,58 @@
-class Car:
+class Bank:
     """
-    A class representing a car with a public brand and a public start method.
+    A class representing a bank with a class variable for its name
+    and a class method to change that name.
     """
-    def __init__(self, brand_name):
+    bank_name = "Default National Bank"  # Class variable
+
+    def __init__(self, branch_id):
         """
-        Initializes the Car object with a brand name.
+        Initializes a Bank instance with a branch ID.
 
         Args:
-            brand_name (str): The brand of the car.
+            branch_id (str): The unique identifier for the bank branch.
         """
-        self.brand = brand_name  # Public variable
+        self.branch_id = branch_id
 
-    def start(self):
+    @classmethod
+    def change_bank_name(cls, new_name):
         """
-        A public method to simulate starting the car.
+        Class method to change the bank's name.
+        This change will be reflected across all instances.
+
+        Args:
+            cls: Refers to the class itself (Bank in this case).
+            new_name (str): The new name for the bank.
         """
-        print(f"The {self.brand} car is starting.")
+        cls.bank_name = new_name
+        print(f"\nBank name has been changed to: {cls.bank_name}")
 
-# Instantiate the Car class
-my_car = Car("Toyota")
+    def display_branch_info(self):
+        """
+        Displays the branch ID and the current bank name.
+        """
+        print(f"Branch ID: {self.branch_id}, Bank Name: {Bank.bank_name}")
 
-# Access the public variable from outside the class
-print(f"My car's brand is: {my_car.brand}")
+# Create instances of the Bank class
+branch1 = Bank("B101")
+branch2 = Bank("B202")
+branch3 = Bank("B303")
 
-# Call the public method from outside the class
-my_car.start()
+print("--- Initial Bank Information ---")
+branch1.display_branch_info()
+branch2.display_branch_info()
+branch3.display_branch_info()
 
-print("-" * 20)
+# Change the bank name using the class method
+Bank.change_bank_name("Global Financial Holdings")
 
-another_car = Car("Honda")
-print(f"Another car's brand is: {another_car.brand}")
-another_car.start()
+print("\n--- Bank Information After Name Change ---")
+# Show that the change affects all instances
+branch1.display_branch_info()
+branch2.display_branch_info()
+branch3.display_branch_info()
+
+# Create a new instance after the name change
+branch4 = Bank("B404")
+print("\n--- New Instance After Name Change ---")
+branch4.display_branch_info()
